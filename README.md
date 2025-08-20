@@ -1,69 +1,153 @@
-# React + TypeScript + Vite
+# 🧩 UI Component Library – Assignment  
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This repository contains a small **React component library** built as part of the UI Assignment.  
+It demonstrates how to design **reusable, modular, and interactive components** with **Storybook**.  
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📂 Folder Structure  
 
-## Expanding the ESLint configuration
+ui-assignment/
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+│── .storybook/  # Storybook config files
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+│── src/
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+│ ├── components/
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+│ │ ├── InputField/ # Component 1: InputField
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+│ │ │ ├── InputField.jsx
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+│ │ │ ├── InputField.css
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+│ │ │ └── InputField.stories.jsx
+
+│ │ ├── DataTable/ # Component 2: DataTable
+
+│ │ │ ├── DataTable.jsx
+
+│ │ │ ├── DataTable.css
+
+│ │ │ └── DataTable.stories.jsx
+
+│ ├── App.js # Demo app (optional)
+
+│ └── index.js # Entry point
+│── package.json
+│── README.md
+
+
+---
+
+## ⚙️ Setup Instructions  
+
+Clone the repository and install dependencies:  
+
+```bash
+git clone https://github.com/your-username/component-library.git
+cd component-library
+npm install
+
+Run the local dev server:
+npm start
+
+Run Storybook:
+npm run storybook
+
+Build Storybook for deployment:
+npm run build-storybook
+````
+
+💡 **Approach**
+🔹 Component 1: InputField
+
+○ Built a reusable Input component with support for:
+
+○ Variants: outlined, filled
+
+○ Sizes: sm, md, lg
+
+○ Error handling (error, helperText)
+
+○ Controlled inputs (via props)
+
+This ensures flexibility across forms, login pages, or custom UIs.
+
+🔹 Component 2: DataTable
+
+○ Built a DataTable component with features like:
+
+○ Dynamic column rendering
+
+○ Row selection (onRowSelect)
+
+○ Loading state
+
+○ Clean styling for readability
+
+This demonstrates how reusable table components can be structured.
+
+
+📦 Example Usage
+InputField
+```bash
+import InputField from "./components/InputField/InputField";
+
+export default function Demo() {
+  return (
+    <div>
+      <InputField
+        label="Username"
+        placeholder="Enter your username"
+        variant="outlined"
+        size="md"
+      />
+
+      <InputField
+        label="Password"
+        placeholder="Enter your password"
+        type="password"
+        variant="filled"
+        size="lg"
+        error
+        helperText="Password must be at least 6 characters"
+      />
+    </div>
+  );
+}
+````
+
+DataTable
+```bash
+import DataTable from "./components/DataTable/DataTable";
+
+const columns = [
+  { header: "ID", accessor: "id" },
+  { header: "Name", accessor: "name" },
+  { header: "Email", accessor: "email" },
+];
+
+const rows = [
+  { id: 1, name: "Alice", email: "alice@email.com" },
+  { id: 2, name: "Bob", email: "bob@email.com" },
+  { id: 3, name: "Charlie", email: "charlie@email.com" },
+];
+
+export default function Demo() {
+  return (
+    <div>
+      <DataTable
+        columns={columns}
+        data={rows}
+        loading={false}
+        onRowSelect={(row) => console.log("Selected:", row)}
+      />
+    </div>
+  );
+}
+````
+🌐 Storybook Preview
+
+Deployed using Chromatic or Vercel.
+👉
