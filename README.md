@@ -150,4 +150,21 @@ export default function Demo() {
 🌐 Storybook Preview
 
 Deployed using Chromatic or Vercel.
-👉
+vercel👉 https://component-library-vrev.vercel.app
+chromatic👉  
+
+## Notes on Testing Setup
+
+This project includes **React + Vite + Storybook**.  
+Originally, we planned to integrate **Vitest inside Storybook** using `@storybook/addon-vitest`.  
+However, at the time of setup, there was a **version mismatch** between:
+
+- `storybook@9.x`  
+- `@storybook/addon-vitest` (currently aligned with Storybook `8.x`)  
+
+Because of this, running Vitest **directly inside Storybook** caused dependency resolution errors.
+
+
+Reason for Skipping Chromatic
+
+Due to the version conflict between Storybook packages, npm run build-storybook cannot generate the static build required for Chromatic deployment. Instead of spending more time on downgrading/upgrading and breaking other dependencies, I kept the project stable and ensured local Storybook works flawlessly for reviewing all component stories.
