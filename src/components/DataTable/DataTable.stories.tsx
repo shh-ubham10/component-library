@@ -1,54 +1,72 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { useState } from 'react';
-import { DataTable } from './DataTable';
-import type { Column } from './types';
+// src/components/DataTable/DataTable.stories.tsx
+import type { Meta, StoryObj } from '@storybook/react'
+import React from 'react'
+import { DataTable } from './DataTable'
+import type { Column } from './types' // adjust if your types file is elsewhere
 
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  age: number;
-}
+type User = { id: number; name: string; age: number }
 
 const columns: Column<User>[] = [
   { key: 'name', title: 'Name', dataIndex: 'name', sortable: true },
-  { key: 'email', title: 'Email', dataIndex: 'email' },
   { key: 'age', title: 'Age', dataIndex: 'age', sortable: true },
-];
+]
 
-const sample: User[] = [
-  { id: 1, name: 'Alice', email: 'alice@example.com', age: 28 },
-  { id: 2, name: 'Bob', email: 'bob@example.com', age: 35 },
-  { id: 3, name: 'Charlie', email: 'charlie@example.com', age: 22 },
-];
+const data: User[] = [
+  { id: 1, name: 'Amy', age: 20 },
+  { id: 2, name: 'Zed', age: 40 },
+  { id: 3, name: 'Bob', age: 28 },
+]
 
 const meta: Meta<typeof DataTable<User>> = {
   title: 'Components/DataTable',
-  component: DataTable,
-  args: { data: sample, columns, selectable: true },
-};
-export default meta;
+  component: DataTable<User>,
+  tags: ['autodocs'],
+  argTypes: {
+    selectable: { control: 'boolean' },
+    loading: { control: 'boolean' },
+    onRowSelect: { action: 'rowSelected' },
+  },
+  parameters: {
+    docs: { description: { component: 'Generic data table with sorting, selection, loading and empty states.' } },
+  },
+}
+export default meta
 
-type Story = StoryObj<typeof DataTable<User>>;
+type Story = StoryObj<typeof DataTable<User>>
 
-export const Default: Story = {};
+export const Basic: Story = {
+  args: {
+    columns,
+    data,
+  },
+}
+
+export const SortableColumns: Story = {
+  args: {
+    columns,
+    data,
+  },
+}
+
+export const SelectableRows: Story = {
+  args: {
+    columns,
+    data,
+    selectable: true,
+  },
+}
 
 export const Loading: Story = {
-  args: { data: [], loading: true },
-};
-
-export const Empty: Story = {
-  args: { data: [], emptyText: 'No data' },
-};
-
-export const SingleSelect: Story = {
-  render: (args) => {
-    const [sel, setSel] = useState<User[]>([]);
-    return (
-      <div>
-        <DataTable<User> {...args} selectionMode="single" onRowSelect={setSel} />
-        <p className="mt-3 text-sm">Selected: {sel[0]?.name ?? 'None'}</p>
-      </div>
-    );
+  args: {
+    columns,
+    data: [],
+    loading: true,
   },
-};
+}
+
+export const EmptyState: Story = {
+  args: {
+    columns,
+    data: [],
+  },
+}

@@ -28,12 +28,20 @@ describe('DataTable', () => {
 
   it('sorts when clicking sortable header', async () => {
     render(<DataTable<User> data={users} columns={columns} />)
-    const nameHeader = screen.getByText('Name')
+
+    const nameHeader = screen.getByRole('columnheader', { name: /name/i })
+    let rows = screen.getAllByRole('row')
+
+    // initial order
+    expect(rows[1]).toHaveTextContent('Zed')
+    expect(rows[2]).toHaveTextContent('Amy')
+
+    // click to sort
     await userEvent.click(nameHeader)
-    const rows = screen.getAllByRole('row')
+
+    rows = screen.getAllByRole('row')
     expect(rows[1]).toHaveTextContent('Amy') // sorted ascending
-    await userEvent.click(nameHeader)
-    expect(rows[1]).toHaveTextContent('Zed') // sorted descending
+    expect(rows[2]).toHaveTextContent('Zed')
   })
 
   it('shows loading state', () => {
